@@ -1,8 +1,11 @@
 * {
   box-sizing: border-box;
+  
 }
 
 body{
+  font-family: 'Ubuntu', sans-serif;
+  color: rgb(89, 89, 89);
   background-color: darkslategray;
   margin: 0;
   height: 100vh;
@@ -13,23 +16,79 @@ body{
 
 .App {
   width: 500px;
-  height: 600px;
+  height: 500px;
   background-color: beige;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 10%;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 3em;
 }
 
 .ctn-set-time {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  width: 100%;
+  font-size: 0.8em;
 }
 
-.ctn-set-length {
+.ctn-arrow-buttons {
+  font-size: 1.6em; 
+  display: flex;
+  align-items: center;
+}
+
+.ctn-arrow-buttons > * {
+  margin: 5px; 
+}
+
+.ctn-arrow-buttons {
   display: flex;
   justify-content: center;
 }
 
+#ctn-session-and-time {
+  border: 4px solid rgb(96, 96, 96);
+  width: 220px;
+  margin: 20px;
+  padding: 20px;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+}
 
+@font-face {
+  font-family: digital-7;
+  src: url(./font/digital-7/digital-7.ttf);
+}
+
+#time-left {
+  font-size: 4em;
+  font-family: digital-7, sans-serif;
+}
+
+.ctn-control {
+  font-size: 2em;
+}
+
+.label-heading {
+  font-weight: 400;
+}
+
+#break-length, #session-length {
+  font-family: digital-7, sans-serif;
+}
+
+.ctn-control {
+
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+}
