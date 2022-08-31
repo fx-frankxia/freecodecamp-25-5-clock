@@ -47,9 +47,6 @@ function App() {
       dispatch(flip())
     } 
   }
-
-
-
   return (
     <div className="App">
       <h1>25 + 5 CLOCK</h1>
@@ -57,17 +54,33 @@ function App() {
         <div id="break-label">
           <h2 className='label-heading'>Break Length</h2>
           <div className='ctn-arrow-buttons'>
-            <i className="fa-solid fa-arrow-up" id="break-increment" onClick={ () => dispatch(breakIncrement()) }></i>
+            <i className="fa-solid fa-arrow-up" id="break-increment" onClick={ () => {
+              if(breakLength < 60) {
+                dispatch(breakIncrement())
+              }
+            } }></i>
             <span id="break-length">{breakLength}</span>
-            <i className="fa-solid fa-arrow-down" id="break-decrement" onClick={ () => dispatch(breakDecrement()) }></i>
+            <i className="fa-solid fa-arrow-down" id="break-decrement" onClick={ () => {
+              if(breakLength > 1) {
+                dispatch(breakDecrement())
+              }
+               }}></i>
           </div>
         </div>
         <div id="session-label">
           <h2 className='label-heading'>Session Length</h2>
           <div className='ctn-arrow-buttons'>
-            <i className="fa-solid fa-arrow-up" id="session-increment" onClick={ () => dispatch(sessionIncrement()) }></i>
+            <i className="fa-solid fa-arrow-up" id="session-increment" onClick={ () => {
+              if(sessionLength < 60) {
+                dispatch(sessionIncrement())
+              }
+            } }></i>
             <span id="session-length">{sessionLength}</span>
-            <i className="fa-solid fa-arrow-down" id="session-decrement" onClick={ () => dispatch(sessionDecrement()) }></i>
+            <i className="fa-solid fa-arrow-down" id="session-decrement" onClick={ () => {
+              if(sessionLength > 1) {
+                dispatch(sessionDecrement())
+              }
+            } }></i>
           </div>
         </div>
 
