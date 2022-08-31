@@ -15,8 +15,10 @@ function App() {
   // Session time
   const sessionTimeLeft = useSelector(state => state.sessionTime.value)
   const tikkingState = useSelector(state => state.sessionTime.isTikking)
-  const mm = Math.floor(sessionTimeLeft / 60) 
-  const ss = sessionTimeLeft % 60
+  const min = Math.floor(sessionTimeLeft / 60) 
+  const mm = min < 10 ? '0'+min : min
+  const sec = sessionTimeLeft % 60
+  const ss = sec < 10 ? '0'+sec : sec
 
 
   useEffect(() => {   
@@ -74,7 +76,7 @@ function App() {
       <section id="timer-label">
         <div id="ctn-session-and-time">
           <h2>SESSION</h2>
-          <div id="time-left">{mm < 10 ? `0${mm}`:mm} : {ss < 10 ? `0${ss}`:ss}</div> 
+          <div id="time-left">{mm}:{ss}</div> 
         </div>
         <div className="ctn-control">
           <span id="start_stop" onClick={()=>{dispatch(flip())}} >

@@ -49,6 +49,7 @@ h1 {
 .ctn-arrow-buttons {
   display: flex;
   justify-content: center;
+  font-size: 2em;
 }
 
 #ctn-session-and-time {
@@ -64,13 +65,15 @@ h1 {
 }
 
 @font-face {
-  font-family: digital-7;
-  src: url(./font/digital-7/digital-7.ttf);
+  font-family: digital-7-mono;
+  src: url(./font/digital-7/digital-7-mono.ttf);
 }
 
 #time-left {
   font-size: 4em;
-  font-family: digital-7, sans-serif;
+  font-family: digital-7-mono, sans-serif;
+  text-align: center;
+  
 }
 
 .ctn-control {
@@ -82,7 +85,7 @@ h1 {
 }
 
 #break-length, #session-length {
-  font-family: digital-7, sans-serif;
+  font-family: digital-7-mono, sans-serif;
 }
 
 .ctn-control {
