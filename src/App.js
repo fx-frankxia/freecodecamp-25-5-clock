@@ -1,7 +1,7 @@
 import './App.css';
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { run, flip,sessionTimeReset } from './redux/sessionTimeSlice'
+import { run, playPause,sessionTimeReset, setToTarget, toggleIsSession } from './redux/sessionTimeSlice'
 import { sessionIncrement, sessionDecrement, sessionReset } from './redux/sessionLengthSlice'
 import { breakIncrement, breakDecrement, breakReset } from './redux/breakLengthSlice'
 
@@ -15,6 +15,8 @@ function App() {
   // Session time
   const sessionTimeLeft = useSelector(state => state.sessionTime.value)
   const tikkingState = useSelector(state => state.sessionTime.isTikking)
+  const isReset = useSelector(state => state.sessionTime.isReset)
+  const isSession = useSelector(state => state.sessionTime.isSession)
   const min = Math.floor(sessionTimeLeft / 60) 
   const mm = min < 10 ? '0'+min : min
   const sec = sessionTimeLeft % 60
@@ -43,10 +45,31 @@ function App() {
     dispatch(sessionReset())
     dispatch(breakReset())
     dispatch(sessionTimeReset())
-    if(tikkingState){
-      dispatch(flip())
-    } 
   }
+
+  // Time Setting function
+  const handleTimeSetting = (reducerFunc) => {
+    dispatch(reducerFunc());    
+  }
+  useEffect(() => {
+    if(isReset){
+      dispatch(setToTarget(sessionLength * 60))
+    }
+  }, [sessionLength])
+  
+  // when count down to 0, switch between session and break
+  useEffect(() => {
+    if(sessionTimeLeft < 0) {
+      if(isSession){
+        dispatch(setToTarget(breakLength * 60))
+        dispatch(toggleIsSession())
+      } else {
+        dispatch(setToTarget(sessionLength * 60))
+        dispatch(toggleIsSession())
+      }    
+    }
+  },[sessionTimeLeft])
+
   return (
     <div className="App">
       <h1>25 + 5 CLOCK</h1>
@@ -56,13 +79,13 @@ function App() {
           <div className='ctn-arrow-buttons'>
             <i className="fa-solid fa-arrow-up" id="break-increment" onClick={ () => {
               if(breakLength < 60) {
-                dispatch(breakIncrement())
+                handleTimeSetting(breakIncrement)
               }
             } }></i>
             <span id="break-length">{breakLength}</span>
             <i className="fa-solid fa-arrow-down" id="break-decrement" onClick={ () => {
               if(breakLength > 1) {
-                dispatch(breakDecrement())
+                handleTimeSetting(breakDecrement)
               }
                }}></i>
           </div>
@@ -72,28 +95,28 @@ function App() {
           <div className='ctn-arrow-buttons'>
             <i className="fa-solid fa-arrow-up" id="session-increment" onClick={ () => {
               if(sessionLength < 60) {
-                dispatch(sessionIncrement())
+                handleTimeSetting(sessionIncrement)
               }
             } }></i>
             <span id="session-length">{sessionLength}</span>
             <i className="fa-solid fa-arrow-down" id="session-decrement" onClick={ () => {
               if(sessionLength > 1) {
-                dispatch(sessionDecrement())
+                handleTimeSetting(sessionDecrement)
               }
             } }></i>
           </div>
         </div>
-
         
       </div>
-      <section id="timer-label">
+      <section>
         <div id="ctn-session-and-time">
-          <h2>SESSION</h2>
+          <h2  id="timer-label">{isSession ? "Session" : "Break"}</h2>
           <div id="time-left">{mm}:{ss}</div> 
         </div>
         <div className="ctn-control">
-          <span id="start_stop" onClick={()=>{dispatch(flip())}} >
-            <i className="fa-solid fa-play"></i>
+          <span id="start_stop" onClick={()=>{dispatch(playPause())}} >
+            {!tikkingState && <i className="fa-solid fa-play" id='playButton'></i>} 
+            {tikkingState && <i className="fa-solid fa-pause" id='pauseButton'></i>}
           </span>
           <span id="reset" onClick={reset}>
             <i className="fa-solid fa-arrows-rotate"></i>

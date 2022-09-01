@@ -15,7 +15,7 @@ body{
 }
 
 .App {
-  width: 500px;
+  width: 420px;
   height: 500px;
   background-color: beige;
   border-radius: 10px;
@@ -55,6 +55,7 @@ h1 {
 #ctn-session-and-time {
   border: 4px solid rgb(96, 96, 96);
   width: 220px;
+  height: 170px;
   margin: 20px;
   padding: 20px;
   padding-top: 10px;
@@ -86,12 +87,18 @@ h1 {
 
 #break-length, #session-length {
   font-family: digital-7-mono, sans-serif;
+  width: 30px;
+  text-align: center;
 }
 
 .ctn-control {
 
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
+}
 
+#playButton, #pauseButton {
+  width: 50px;
+  margin-right: 1em;
 }
