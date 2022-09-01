@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { run, playPause,sessionTimeReset, setToTarget, toggleIsSession } from './redux/sessionTimeSlice'
 import { sessionIncrement, sessionDecrement, sessionReset } from './redux/sessionLengthSlice'
 import { breakIncrement, breakDecrement, breakReset } from './redux/breakLengthSlice'
+import beepSrc from './audio/beep.mp3'
 
 // set global interval ID
 let intervalId = 0;
@@ -42,6 +43,9 @@ function App() {
 
   //Reset button
   const reset = () => {
+    const beep = document.getElementById('beep');
+    beep.pause();
+    beep.currentTime = 0;
     dispatch(sessionReset())
     dispatch(breakReset())
     dispatch(sessionTimeReset())
@@ -60,18 +64,22 @@ function App() {
   // when count down to 0, switch between session and break
   useEffect(() => {
     if(sessionTimeLeft < 0) {
+      const beep = document.getElementById('beep');
       if(isSession){
         dispatch(setToTarget(breakLength * 60))
         dispatch(toggleIsSession())
+        beep.play()
       } else {
         dispatch(setToTarget(sessionLength * 60))
         dispatch(toggleIsSession())
+        beep.play()
       }    
     }
   },[sessionTimeLeft])
 
   return (
     <div className="App">
+      <audio src={beepSrc} id="beep"></audio>
       <h1>25 + 5 CLOCK</h1>
       <div className='ctn-set-time'>
         <div id="break-label">
